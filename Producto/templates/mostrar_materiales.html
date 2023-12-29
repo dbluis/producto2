@@ -17,8 +17,8 @@
             {% for material in materiales %}
             <tr>
                 <td>{{material.nombre}}</td>
-                <td>{{material.cantidad_comprada_gramos}} - Unidades</td>
-                <td>{{material.costo_total}}</td>
+                <td>{{material.cantidad_comprada_gramos}} - (g - ml - unidades)</td>
+                <td>{{material.costo_total}} $</td>
                 <td>
                     <form action="{% url 'index' %}" method="POST">
                         {% csrf_token %}
