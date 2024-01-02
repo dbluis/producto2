@@ -1,11 +1,12 @@
-<h2>{{ producto.nombre }}</h2>
-<p>{{ producto.descripcion }}</p>
+{% extends "layout/base.html" %}
 
-<h3>Detalles de Materiales:</h3>
-<ul>
-    {% for detalle in detalles_materiales %}
-    <li>{{ detalle.material.nombre }} - {{ detalle.cantidad_gramos }}g</li>
-    {% endfor %}
-</ul>
+{% block content %}
 
-<h3>Costo Total: ${{ costo_total }}</h3>
+<main class="container">
+    <h2>{{ producto.nombre }}</h2>
+    <p>{{ producto.descripcion }}</p>
+
+    <h3>Costo Total: ${{ costo_total }}</h3>
+</main>
+
+{% endblock %}

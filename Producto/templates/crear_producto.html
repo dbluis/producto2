@@ -1,0 +1,24 @@
+<!-- templates/crear_producto.html -->
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <section class="col-md-4 offset-md-4">
+            <h2>Crear Producto</h2>
+            <form method="post" action="{% url 'crear_producto' %}">
+                {% csrf_token %}
+                {{ producto_form.as_p }}
+                <p>Colocar los materiales en todos los campos y si no los necesita colocar 0</p>
+                {{ detalle_formset.management_form }}
+                {% for form in detalle_formset %}
+                    {{ form.as_p }}
+                {% endfor %}
+                <input type="submit" value="Calcular Costo">
+            </form>
+        </section>
+    </div>
+</main>
+
+{% endblock %}
