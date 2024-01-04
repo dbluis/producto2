@@ -12,17 +12,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for p in producto %}
+            {% for p in productos %}
             <tr>
-                <td>{{p.nombre}}</td>
+                <td><strong>{{p.nombre}}</strong></td>
                 <td>
-                    <form action="{% url 'index' %}" method="POST">
+                    <form action="{% url 'detalle' p.id %}" method="POST">
                         {% csrf_token %}
                         <button class="btn btn-dark">Ver</button>
                     </form>
                 </td>
                 <td>
-                    <form action="{% url 'index' %}" method="POST">
+                    <form action="{% url 'eliminar_producto' p.id %}" method="POST">
                         {% csrf_token %}
                         <button class="btn btn-danger">Eliminar</button>
                     </form>

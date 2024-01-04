@@ -20,4 +20,4 @@ class DetalleMaterial(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     cantidad_utilizada_gramos = models.DecimalField(
-        max_digits=5, decimal_places=2)
+        max_digits=7, decimal_places=2)

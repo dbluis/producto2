@@ -1,0 +1,35 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+                <h1>Modificar material</h1>
+            {{error}}
+            <form method="post" action="{% url 'editar_material' material.id %}">
+                {% csrf_token %}
+
+                <div style="margin-bottom: 10px;">
+                    <label for="id_nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="id_nombre" value="{{ material.nombre }}">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="id_cantidad_comprada_gramos">Cantidad comprada gramos:</label>
+                    <input type="number" name="cantidad_comprada_gramos" id="id_cantidad_comprada_gramos" value="{{ material.cantidad_comprada_gramos }}">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="id_costo_total">Costo total:</label>
+                    <input type="number" name="costo_total" id="id_costo_total" value="{{ material.costo_total }}">
+                </div>
+
+                <button type="submit" class="btn btn-dark">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

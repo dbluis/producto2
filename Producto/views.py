@@ -13,6 +13,8 @@ from django.forms import formset_factory
 def index(request):
     return render(request, "index.html")
 
+# Usuario
+
 
 def crearUser(request):
     if request.method == "GET":
@@ -46,9 +48,13 @@ def signin(request):
             login(request, user)
             return redirect(index)
 
+# Texto
+
 
 def info(request):
     return render(request, "info.html")
+
+# Materiales
 
 
 def mostrar_materiales(request):
@@ -72,15 +78,44 @@ def crear_materiales(request):
         except ValueError as e:
             return render(request, "crear_materiales.html", {"error": str(e)})
 
+def editar_material(request, material_id):
+    material_unico = get_object_or_404(Material, pk=material_id)
+
+    if request.method == "GET":
+        form = Material_unitario(instance=material_unico)
+        return render(request, "editar_material.html", {"material": material_unico, "form": form})
+    elif request.method == "POST":
+        try:
+            form = Material_unitario(request.POST, instance=material_unico)
+            if form.is_valid():
+                form.save()
+                return redirect("mostrar_materiales")
+            else:
+                # Manejar caso en el que el formulario no es válido
+                return render(request, "editar_material.html", {"material": material_unico, "form": form})
+        except Exception as e:
+            # Manejar otras excepciones si es necesario
+            return render(request, "editar_material.html", {"error": str(e)})
+
+
+
+def eliminar_material(request, material_id):
+    material = get_object_or_404(Material, pk=material_id)
+    if request.method == "POST":
+        material.delete()
+        return redirect("mostrar_materiales")
+
 # Producto
 def crear_producto(request):
     try:
         material = Material.objects.all()
-        DetalleMaterialFormSet = formset_factory(DetalleMaterialForm, extra=len(material))
+        DetalleMaterialFormSet = formset_factory(
+            DetalleMaterialForm, extra=len(material))
 
         if request.method == 'POST':
             producto_form = ProductoForm(request.POST)
-            detalle_formset = DetalleMaterialFormSet(request.POST, prefix='detalle')
+            detalle_formset = DetalleMaterialFormSet(
+                request.POST, prefix='detalle')
 
             if producto_form.is_valid() and detalle_formset.is_valid():
                 producto = producto_form.save()
@@ -94,10 +129,12 @@ def crear_producto(request):
             producto_form = ProductoForm()
             detalle_formset = DetalleMaterialFormSet(prefix='detalle')
 
-        context = {'producto_form': producto_form, 'detalle_formset': detalle_formset}
+        context = {'producto_form': producto_form,
+                   'detalle_formset': detalle_formset}
         return render(request, 'crear_producto.html', context)
     except ValueError as e:
         return render(request, "crear_producto.html", {"error": str(e)})
+
 
 def calcular_costo(request, producto_id):
     producto = Producto.objects.get(pk=producto_id)
@@ -114,9 +151,23 @@ def calcular_costo(request, producto_id):
     context = {'producto': producto, 'costo_total': costo_total}
     return render(request, 'calcular_costo.html', context)
 
+
 def mostrar_producto(request):
-    producto = Producto.objects.all()
+    productos = Producto.objects.all()
 
     return render(request, "mostrar_producto.html", {
-        "producto": producto
+        "productos": productos
     })
+
+
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+    if request.method == "POST":
+        producto.delete()
+        return redirect("mostrar_producto")
+
+
+def detalle(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+    if request.method == "POST":
+        return redirect("calcular_costo")
