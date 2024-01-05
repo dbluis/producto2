@@ -1,0 +1,42 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Numero</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">...................</th>
+                <th scope="col">...................</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{cliente.nombre}}</td>
+                <td>{{cliente.apellido}}</td>
+                <td>{{cliente.telefono}}</td>
+                <td>{{cliente.direccion}}</td>
+                <td>
+                    <form action="{% url 'editar_cliente' cliente.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-dark">Editar</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'eliminar_cliente' cliente.id %}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -21,5 +21,10 @@ urlpatterns = [
           views.calcular_costo, name="calcular_costo"),
      path("mostrar_producto/<int:producto_id>/delete",
           views.eliminar_producto, name="eliminar_producto"),
-     path("calcular_costo/<int:producto_id>/", views.detalle, name="detalle")
+     path("calcular_costo/<int:producto_id>/", views.detalle, name="detalle"),
+     # Clientes
+     path("crear_cliente/", views.crear_cliente, name="crear_cliente"),
+     path("mostrar_clientes/", views.mostrar_clientes, name="mostrar_clientes"),
+     path("mostrar_clientes/<int:cliente_id>/delete", views.eliminar_cliente, name="eliminar_cliente"),
+     path("mostrar_clientes/<int:cliente_id>/", views.editar_cliente, name="editar_cliente"),
 ]

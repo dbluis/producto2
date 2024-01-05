@@ -21,3 +21,10 @@ class DetalleMaterial(models.Model):
     material = models.ForeignKey(Material, on_delete=models.CASCADE)
     cantidad_utilizada_gramos = models.DecimalField(
         max_digits=7, decimal_places=2)
+
+
+class Clientes(models.Model):
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
