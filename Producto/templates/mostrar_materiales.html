@@ -20,7 +20,7 @@
                 <td>{{material.cantidad_comprada_gramos}} - (g - ml - unidades)</td>
                 <td>{{material.costo_total}} $</td>
                 <td>
-                    <form action="{% url 'index' %}" method="POST">
+                    <form action="{% url 'editar_material' material.id %}" method="POST">
                         {% csrf_token %}
                         <button class="btn btn-dark">Modificar</button>
                     </form>

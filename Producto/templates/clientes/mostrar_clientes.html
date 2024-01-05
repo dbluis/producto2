@@ -7,22 +7,28 @@
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Numero</th>
+                <th scope="col">Direccion</th>
                 <th scope="col">...................</th>
                 <th scope="col">...................</th>
             </tr>
         </thead>
         <tbody>
-            {% for p in productos %}
+            {% for cliente in clientes %}
             <tr>
-                <td><strong>{{p.nombre}}</strong></td>
+                <td>{{cliente.nombre}}</td>
+                <td>{{cliente.apellido}}</td>
+                <td>{{cliente.telefono}}</td>
+                <td>{{cliente.direccion}}</td>
                 <td>
-                    <form action="{% url 'detalle' p.id %}" method="POST">
+                    <form action="{% url 'editar_cliente' cliente.id %}" method="POST">
                         {% csrf_token %}
-                        <button class="btn btn-dark">Ver</button>
+                        <button class="btn btn-dark">Editar</button>
                     </form>
                 </td>
                 <td>
-                    <form action="{% url 'eliminar_producto' p.id %}" method="POST">
+                    <form action="{% url 'eliminar_cliente' cliente.id %}" method="POST">
                         {% csrf_token %}
                         <button class="btn btn-danger">Eliminar</button>
                     </form>
