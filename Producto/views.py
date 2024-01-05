@@ -46,6 +46,8 @@ def signin(request):
             return redirect(index)
 
 # Texto
+
+
 def info(request):
     return render(request, "info.html")
 
@@ -58,6 +60,7 @@ def mostrar_materiales(request):
     return render(request, "mostrar_materiales.html", {
         "materiales": materiales
     })
+
 
 @login_required
 def crear_materiales(request):
@@ -72,6 +75,7 @@ def crear_materiales(request):
             return redirect("mostrar_materiales")
         except ValueError as e:
             return render(request, "crear_materiales.html", {"error": str(e)})
+
 
 @login_required
 def editar_material(request, material_id):
@@ -92,6 +96,7 @@ def editar_material(request, material_id):
         except Exception as e:
             # Manejar otras excepciones si es necesario
             return render(request, "editar_material.html", {"error": str(e)})
+
 
 @login_required
 def eliminar_material(request, material_id):
@@ -132,6 +137,7 @@ def crear_producto(request):
     except ValueError as e:
         return render(request, "crear_producto.html", {"error": str(e)})
 
+
 @login_required
 def calcular_costo(request, producto_id):
     producto = Producto.objects.get(pk=producto_id)
@@ -149,6 +155,7 @@ def calcular_costo(request, producto_id):
     context = {'producto': producto, 'costo_total': costo_total}
     return render(request, 'calcular_costo.html', context)
 
+
 @login_required
 def mostrar_producto(request):
     productos = Producto.objects.all()
@@ -157,12 +164,14 @@ def mostrar_producto(request):
         "productos": productos
     })
 
+
 @login_required
 def eliminar_producto(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
     if request.method == "POST":
         producto.delete()
         return redirect("mostrar_producto")
+
 
 @login_required
 def detalle(request, producto_id):
@@ -185,6 +194,8 @@ def crear_cliente(request):
             return redirect("mostrar_clientes")
         except ValueError as e:
             return render(request, "clientes/mostrar_clientes.html", {"error": str(e)})
+
+
 @login_required
 def mostrar_clientes(request):
     clientes = Clientes.objects.all()
@@ -192,23 +203,27 @@ def mostrar_clientes(request):
     return render(request, "clientes/mostrar_clientes.html", {
         "clientes": clientes
     })
+
+
 @login_required
 def eliminar_cliente(request, cliente_id):
     cliente = get_object_or_404(Clientes, pk=cliente_id)
     if request.method == "POST":
         cliente.delete()
         return redirect("mostrar_clientes")
+
+
 @login_required
 def editar_cliente(request, cliente_id):
     cliente = get_object_or_404(Clientes, pk=cliente_id)
     if request.method == "GET":
         form = ClientesForm(instance=cliente)
         return render(request, "clientes/editar_cliente", {
-            "cliente": cliente, "form":form
+            "cliente": cliente, "form": form
         })
     elif request.method == "POST":
         try:
-            form = ClientesForm(request.POST ,instance=cliente)
+            form = ClientesForm(request.POST, instance=cliente)
             if form.is_valid():
                 form.save()
                 return redirect("mostrar_clientes")
