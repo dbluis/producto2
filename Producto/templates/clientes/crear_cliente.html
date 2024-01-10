@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<main class="container">
+<main class="container my-4">
     <div class="row">
         <section class="col-md-4 offset-md-4">
-            <h2>Crear Cliente</h2>
-            <form method="post" action="{% url 'crear_cliente' %}">
+            <form method="post" action="{% url 'crear_cliente' %}" class="card card-body">
+                <h2 class="text-center">Crear Cliente</h2>
                 {% csrf_token %}
                 {{form}}
-                <input type="submit" value="Agregar">
+                <input type="submit" value="Agregar" class="btn btn-dark my-2">
             </form>
         </section>
     </div>

@@ -55,7 +55,7 @@ def info(request):
 # Materiales
 @login_required
 def mostrar_materiales(request):
-    materiales = Material.objects.all()
+    materiales = Material.objects.filter(user=request.user)
 
     return render(request, "mostrar_materiales.html", {
         "materiales": materiales
@@ -71,7 +71,9 @@ def crear_materiales(request):
     else:
         try:
             form = Material_unitario(request.POST)
-            form.save()
+            new_material = form.save(commit=False)
+            new_material.user = request.user
+            new_material.save()
             return redirect("mostrar_materiales")
         except ValueError as e:
             return render(request, "crear_materiales.html", {"error": str(e)})
@@ -79,7 +81,8 @@ def crear_materiales(request):
 
 @login_required
 def editar_material(request, material_id):
-    material_unico = get_object_or_404(Material, pk=material_id)
+    material_unico = get_object_or_404(
+        Material, pk=material_id, user=request.user)
 
     if request.method == "GET":
         form = Material_unitario(instance=material_unico)
@@ -100,7 +103,7 @@ def editar_material(request, material_id):
 
 @login_required
 def eliminar_material(request, material_id):
-    material = get_object_or_404(Material, pk=material_id)
+    material = get_object_or_404(Material, pk=material_id, user=request.user)
     if request.method == "POST":
         material.delete()
         return redirect("mostrar_materiales")
@@ -110,7 +113,7 @@ def eliminar_material(request, material_id):
 @login_required
 def crear_producto(request):
     try:
-        material = Material.objects.all()
+        material = Material.objects.filter(user=request.user)
         DetalleMaterialFormSet = formset_factory(
             DetalleMaterialForm, extra=len(material))
 
@@ -120,22 +123,37 @@ def crear_producto(request):
                 request.POST, prefix='detalle')
 
             if producto_form.is_valid() and detalle_formset.is_valid():
-                producto = producto_form.save()
+                producto = producto_form.save(commit=False)
+                producto.user = request.user
+                producto.save()
+
                 for detalle_form in detalle_formset:
                     detalle = detalle_form.save(commit=False)
                     detalle.producto = producto
+                    detalle.user = request.user
                     detalle.save()
 
                 return redirect('calcular_costo', producto_id=producto.id)
         else:
             producto_form = ProductoForm()
             detalle_formset = DetalleMaterialFormSet(prefix='detalle')
+        for form in detalle_formset.forms:
+            form.fields['material'].queryset = material
 
         context = {'producto_form': producto_form,
                    'detalle_formset': detalle_formset}
         return render(request, 'crear_producto.html', context)
     except ValueError as e:
         return render(request, "crear_producto.html", {"error": str(e)})
+
+
+@login_required
+def mostrar_producto(request):
+    productos = Producto.objects.filter(user=request.user)
+
+    return render(request, "mostrar_producto.html", {
+        "productos": productos
+    })
 
 
 @login_required
@@ -157,17 +175,8 @@ def calcular_costo(request, producto_id):
 
 
 @login_required
-def mostrar_producto(request):
-    productos = Producto.objects.all()
-
-    return render(request, "mostrar_producto.html", {
-        "productos": productos
-    })
-
-
-@login_required
 def eliminar_producto(request, producto_id):
-    producto = get_object_or_404(Producto, pk=producto_id)
+    producto = get_object_or_404(Producto, pk=producto_id, user=request.user)
     if request.method == "POST":
         producto.delete()
         return redirect("mostrar_producto")
@@ -190,7 +199,9 @@ def crear_cliente(request):
     else:
         try:
             form = ClientesForm(request.POST)
-            form.save()
+            new_cliente = form.save(commit=False)
+            new_cliente.user = request.user
+            new_cliente.save()
             return redirect("mostrar_clientes")
         except ValueError as e:
             return render(request, "clientes/mostrar_clientes.html", {"error": str(e)})
@@ -198,7 +209,7 @@ def crear_cliente(request):
 
 @login_required
 def mostrar_clientes(request):
-    clientes = Clientes.objects.all()
+    clientes = Clientes.objects.filter(user=request.user)
 
     return render(request, "clientes/mostrar_clientes.html", {
         "clientes": clientes
@@ -207,7 +218,7 @@ def mostrar_clientes(request):
 
 @login_required
 def eliminar_cliente(request, cliente_id):
-    cliente = get_object_or_404(Clientes, pk=cliente_id)
+    cliente = get_object_or_404(Clientes, pk=cliente_id, user=request.user)
     if request.method == "POST":
         cliente.delete()
         return redirect("mostrar_clientes")

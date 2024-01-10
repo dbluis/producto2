@@ -14,7 +14,7 @@
         <tbody>
             {% for p in productos %}
             <tr>
-                <td><strong>{{p.nombre}}</strong></td>
+                <td><strong>{{p.nombre|capfirst}}</strong></td>
                 <td>
                     <form action="{% url 'detalle' p.id %}" method="POST">
                         {% csrf_token %}

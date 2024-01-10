@@ -2,11 +2,18 @@
 
 {% block content %}
 
-<main class="container">
-    <h2>{{ producto.nombre }}</h2>
-    <p>{{ producto.descripcion }}</p>
-
-    <h3>Costo Total: ${{ costo_total }}</h3>
+<main class="container my-4">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card card-body">
+                <h2>{{ producto.nombre }}</h2>
+                <p>{{ producto.descripcion }}</p>
+                
+                <h3>Costo Total: ${{ costo_total }}</h3>
+            </div>
+        </div>
+    </div>
 </main>
+
 
 {% endblock %}

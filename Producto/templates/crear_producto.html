@@ -3,11 +3,12 @@
 
 {% block content %}
 
-<main class="container">
+<main class="container my-4">
     <div class="row">
         <section class="col-md-4 offset-md-4">
-            <h2>Crear Producto</h2>
-            <form method="post" action="{% url 'crear_producto' %}">
+            
+            <form method="post" action="{% url 'crear_producto' %}" class="card card-body">
+                <h2 class="text-center">Crear Producto</h2>
                 {% csrf_token %}
                 {{ producto_form.as_p }}
                 <p>Colocar los materiales en todos los campos y si no los necesita colocar 0</p>
@@ -15,7 +16,7 @@
                 {% for form in detalle_formset %}
                     {{ form.as_p }}
                 {% endfor %}
-                <input type="submit" value="Calcular Costo">
+                <input class="btn btn-dark" type="submit" value="Calcular Costo">
             </form>
         </section>
     </div>

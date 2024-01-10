@@ -16,7 +16,7 @@
         <tbody>
             {% for material in materiales %}
             <tr>
-                <td>{{material.nombre}}</td>
+                <td><b>{{material.nombre|capfirst}}</b></td>
                 <td>{{material.cantidad_comprada_gramos}} - (g - ml - unidades)</td>
                 <td>{{material.costo_total}} $</td>
                 <td>
