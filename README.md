@@ -1,7 +1,6 @@
 # Productos
-Esta pagina web esta diseñada para calcular el costo de un determinado producto que deseemos vender en nuestra tiendo o negocio.
-Este sitio web funciona mediante Usuarios la cual no interactuan entre si. Para calcular el coste de un determinado producto 
-primero debemos crear los materiales que este producto va a disponer dando un ejemplo si tenemos una pasteleria podriamos crear el producto 
-Torta de chocolate este producto va a tener los materiales Manteca, Harina, Huevo, Leche, Chocolate, Caja de carton, etc...
-Al momento de cargar los materiales tendremos la posibilidad de colocarle a cada uno cuanto fue el valor de la compra y el peso o cantidad
-la cual al momento de crear nuestro poducto solo colocaremos lo que llevara por unidad. En este caso de la torta la cantidad que indica en la receta.
+Esta página web está diseñada para calcular el costo de un producto que deseamos vender en nuestra tienda o negocio. El sistema funciona a través de usuarios independientes, sin interacción entre ellos.
+
+Para calcular el costo de un producto, primero debemos registrar los materiales que lo componen. Por ejemplo, si administramos una pastelería y queremos calcular el costo de una Torta de Chocolate, debemos registrar los ingredientes necesarios, como manteca, harina, huevo, leche, chocolate, caja de cartón, entre otros.
+
+Al agregar los materiales, podemos ingresar el precio de compra y la cantidad adquirida (en peso o unidades). Luego, al crear un producto, simplemente indicamos la cantidad de cada material utilizada por unidad de producto, según la receta. De esta manera, el sistema calculará automáticamente el costo de producción por unidad
